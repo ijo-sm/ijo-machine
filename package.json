@@ -1,0 +1,16 @@
+{
+	"name": "ijo-machine",
+	"version": "0.0.1",
+	"description": "The machine code for IJO.",
+	"main": "index.js",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/ijo-sm/ijo-machine.git"
+	},
+	"author": "IJO",
+	"license": "GPL-3.0",
+	"bugs": {
+		"url": "https://github.com/ijo-sm/ijo-machine/issues"
+	},
+	"homepage": "https://github.com/ijo-sm/ijo-machine#readme"
+}
