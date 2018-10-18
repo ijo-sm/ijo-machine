@@ -1,9 +1,14 @@
+process.stdin.resume();
+global.Utils = require("./src/utils/utils");
 global.app = new (require("./src/app"))();
 app.start()
-.then(function() {
+.then(() => {
 	console.log("IJO Machine has started.");
 });
 
-process.on("exit", function() {
-	app.stop();
+Utils.process.onExit(end => {
+    app.stop()
+    .then(() => {
+        end();
+    });
 });
