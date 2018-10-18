@@ -53,6 +53,7 @@ module.exports = class AbstractConfigFile {
 	set(key, value, parent = this.configData) {
 		let keysArray = key.split(".");
 		
+		
 		if(keysArray.length === 1) {
 			parent[key] = value;
 
