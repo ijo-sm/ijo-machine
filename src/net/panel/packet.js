@@ -1,6 +1,7 @@
 module.exports = class Packet {
-	constructor(event, callback) {
+	constructor(event, state, callback) {
 		this.event = event;
+		this.state = state;
 		this.callback = callback;
 	}
 
