@@ -26,6 +26,12 @@ module.exports = class PanelClient {
 
 	}
 
+	send(event, data = {}) {
+		data._event = event;
+
+		this.socket.write(JSON.stringify(data));
+	}
+
 	disconnect() {
 
 	}
