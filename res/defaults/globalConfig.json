@@ -1,3 +1,6 @@
 {
-	
+	"panel": {
+		"host": "localhost",
+		"port": 4944
+	}
 }
