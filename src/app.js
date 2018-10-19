@@ -16,6 +16,8 @@ module.exports = class Application {
 	}
 
 	async stop() {
+		await this.globalConfig.save();
+		await this.privateConfig.save();
 		await this.panelClient.disconnect();
 	}
 }
