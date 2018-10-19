@@ -8,6 +8,10 @@ module.exports = class PanelClient {
 	}
 
 	connect() {
+		this.socket = net.createConnection({
+			host: app.globalConfig.get("panel.host"),
+			port: app.globalConfig.get("panel.port")
+		});
 
 	}
 
