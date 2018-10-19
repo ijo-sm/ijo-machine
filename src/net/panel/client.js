@@ -24,6 +24,31 @@ module.exports = class PanelClient {
 			port: app.globalConfig.get("panel.port")
 		});
 
+		this.socket.on("connect", () => {
+			if(app.privateConfig.get("id") == undefined) {
+				this.send("machine/create");
+			}
+			else {
+				this.send("machine/auth", {id: app.privateConfig.get("id"), secret: app.privateConfig.get("secret")});
+			}
+		});
+
+		this.socket.on("error", error => {
+			switch(error.code) {
+				case "ECONNRESET":
+					console.error("Abruptly lost connection to server");
+					break;
+				case "ECONNREFUSED":
+					console.error("Could not connect to server");
+					break;
+				default:
+					throw error;
+			}
+		});
+
+		this.socket.on("data", data => {
+			this.packetHandler.handle(data);
+		});
 	}
 
 	send(event, data = {}) {
