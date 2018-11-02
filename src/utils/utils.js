@@ -1,3 +1,5 @@
+const Path = require("path");
+
 class ProcessUtilities {
 	onExit(callback) {
 		process.on('message', message => {
@@ -14,9 +16,16 @@ class ProcessUtilities {
 	}
 }
 
+class PathUtilities {
+	resolve(path) {
+		return Path.resolve(__dirname, "../../", path);
+	}
+}
+
 class Utilities {
 	constructor() {
 		this.process = new ProcessUtilities();
+		this.path = new PathUtilities();
 	}
 }
 
