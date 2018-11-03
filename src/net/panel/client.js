@@ -20,16 +20,16 @@ module.exports = class PanelClient {
 
 	connect() {
 		this.socket = net.createConnection({
-			host: app.globalConfig.get("panel.host"),
-			port: app.globalConfig.get("panel.port")
+			host: ijo.globalConfig.get("panel.host"),
+			port: ijo.globalConfig.get("panel.port")
 		});
 
 		this.socket.on("connect", () => {
-			if(app.privateConfig.get("id") == undefined) {
+			if(ijo.privateConfig.get("id") == undefined) {
 				this.send("machine/create");
 			}
 			else {
-				this.send("machine/auth", {id: app.privateConfig.get("id"), secret: app.privateConfig.get("secret")});
+				this.send("machine/auth", {id: ijo.privateConfig.get("id"), secret: ijo.privateConfig.get("secret")});
 			}
 		});
 

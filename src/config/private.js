@@ -1,7 +1,7 @@
 const Path = require("path");
-const AbstractConfigFile = require("./abstract");
+const ConfigFile = require("@ijo-sm/helper-config");
 
-module.exports = class PrivateConfigFile extends AbstractConfigFile {
+module.exports = class PrivateConfigFile extends ConfigFile {
 	constructor() {
 		let defaultPrivateConfigPath = Path.resolve(__dirname, "../../res/defaults/privateConfig.json");
 		let destPrivateConfigPath = Path.resolve(__dirname, "../../../data/machineVariables.json");

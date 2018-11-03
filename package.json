@@ -14,6 +14,11 @@
 	},
 	"homepage": "https://github.com/ijo-sm/ijo-machine#readme",
 	"dependencies": {
+		"@ijo-sm/helper-config": "0.0.3",
+		"@ijo-sm/helper-database": "0.0.2",
+		"@ijo-sm/utils": "0.0.1",
+		"@ijo-sm/utils-path": "0.0.1",
+		"@ijo-sm/utils-process": "0.0.1",
 		"lowdb": "^1.0.0",
 		"pify": "^4.0.0"
 	}

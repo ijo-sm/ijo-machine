@@ -14,8 +14,8 @@ module.exports = class MachinePacketList extends PacketList {
 		assert(packet.id, "The value id of the received packet is undefined");
 		assert(packet.secret, "The value secret of the received packet is undefined");
 
-		app.privateConfig.set("id", packet.id);
-		app.privateConfig.set("secret", packet.secret);
+		ijo.privateConfig.set("id", packet.id);
+		ijo.privateConfig.set("secret", packet.secret);
 	}
 
 	authed() {
