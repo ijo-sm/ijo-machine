@@ -25,12 +25,9 @@ module.exports = class PanelClient {
 		});
 
 		this.socket.on("connect", () => {
-			if(ijo.privateConfig.get("id") == undefined) {
-				this.send("machine/create");
-			}
-			else {
-				this.send("machine/auth", {id: ijo.privateConfig.get("id"), secret: ijo.privateConfig.get("secret")});
-			}
+			this.packetHandler.handle(JSON.stringify({
+				_event: "machine/connected"
+			}));
 		});
 
 		this.socket.on("error", error => {
