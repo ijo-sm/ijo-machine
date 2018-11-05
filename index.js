@@ -1,13 +1,16 @@
 process.stdin.resume();
-global.Utils = require("./src/utils/utils");
-global.app = new (require("./src/app"))();
-app.start()
+
+global.include = require("@ijo-sm/helper-include");
+const Utils = include("@ijo-sm/utils");
+
+let ijo = new (include("src/app"))();
+ijo.start()
 .then(() => {
 	console.log("IJO Machine has started.");
 });
 
 Utils.process.onExit(end => {
-    app.stop()
+    ijo.stop()
     .then(() => {
         end();
     });
