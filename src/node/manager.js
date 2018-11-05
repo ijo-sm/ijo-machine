@@ -1,17 +1,18 @@
-const NodeTree = require("./tree");
+const NodeTree = include("src/node/tree");
+const database = include("src/database/database");
 
-module.exports = class NodeManager {
+class NodeManager {
 	constructor() {
 		this.trees = [];
 		this.blueprints = [];
 	}
 
 	async initialize() {
-		await ijo.db.create("nodeTrees");
+		await database.create("nodeTrees");
 	}
 
 	load() {
-		let nodeTrees = ijo.db.get("nodeTrees").value();
+		let nodeTrees = database.get("nodeTrees").value();
 
 		for(let nodeTree of nodeTrees) {
 			this.trees.push(new NodeTree(nodeTree));
@@ -30,7 +31,7 @@ module.exports = class NodeManager {
 		});
 		this.trees.push(nodeTree);
 
-		return ijo.db.get("nodeTrees").push(nodeTree.toObject()).write();
+		return database.get("nodeTrees").push(nodeTree.toObject()).write();
 	}
 
 	registerBlueprint(name, blueprint) {
@@ -38,3 +39,5 @@ module.exports = class NodeManager {
 		this.blueprints.push(blueprint);
 	}
 }
+
+module.exports = new NodeManager();

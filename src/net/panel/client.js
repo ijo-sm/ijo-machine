@@ -1,31 +1,22 @@
-const net = require("net");
-const Encryption = require("./../encryption");
-const PacketHandler = require("./handler");
-const MachinePackets = require("./packets/machine");
+const Net = include("net");
+const packetHandler = include("src/net/panel/handler");
+const globalConfig = include("src/config/global");
 
-module.exports = class PanelClient {
+class PanelClient {
 	constructor() {
-		this.packetHandler = new PacketHandler();
-		this.encryption = new Encryption();
 		this.state = "authenticating";
-
-		let packetLists = [
-			new MachinePackets()
-		];
-		
-		for(let packetList of packetLists) {
-			packetList.init(this.packetHandler);
-		}
 	}
 
 	connect() {
-		this.socket = net.createConnection({
-			host: ijo.globalConfig.get("panel.host"),
-			port: ijo.globalConfig.get("panel.port")
+		packetHandler.init(this);
+
+		this.socket = Net.createConnection({
+			host: globalConfig.get("panel.host"),
+			port: globalConfig.get("panel.port")
 		});
 
 		this.socket.on("connect", () => {
-			this.packetHandler.handle(JSON.stringify({
+			packetHandler.handle(JSON.stringify({
 				_event: "machine/connected"
 			}));
 		});
@@ -44,7 +35,7 @@ module.exports = class PanelClient {
 		});
 
 		this.socket.on("data", data => {
-			this.packetHandler.handle(data);
+			packetHandler.handle(data);
 		});
 	}
 
@@ -58,3 +49,5 @@ module.exports = class PanelClient {
 
 	}
 }
+
+module.exports = new PanelClient();

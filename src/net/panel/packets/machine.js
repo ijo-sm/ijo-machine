@@ -1,22 +1,23 @@
-const assert = require("assert");
-const PacketList = require("./model");
-const Packet = require("./../packet");
+const PacketList = include("src/net/panel/packets/model");
+const Packet = include("src/net/panel/packet");
+const Assert = include("assert");
+const privateConfig = include("src/config/private");
 
-module.exports = class MachinePacketList extends PacketList {
+class MachinePacketList extends PacketList {
 	init(handler) {
 		super.init(handler);
 
-		handler.addPacket(new Packet("machine/created", "authenticating", this.created));
-		handler.addPacket(new Packet("machine/authed", "authenticating", this.authed));
-		handler.addPacket(new Packet("machine/connected", "authenticating", this.connected));
+		this.handler.addPacket(new Packet("machine/created", "authenticating", this.created.bind(this)));
+		this.handler.addPacket(new Packet("machine/authed", "authenticating", this.authed.bind(this)));
+		this.handler.addPacket(new Packet("machine/connected", "authenticating", this.connected.bind(this)));
 	}
 
 	created(packet) {
-		assert(packet.id, "The value id of the received packet is undefined");
-		assert(packet.secret, "The value secret of the received packet is undefined");
+		Assert(packet.id, "The value id of the received packet is undefined");
+		Assert(packet.secret, "The value secret of the received packet is undefined");
 
-		ijo.privateConfig.set("id", packet.id);
-		ijo.privateConfig.set("secret", packet.secret);
+		privateConfig.set("id", packet.id);
+		privateConfig.set("secret", packet.secret);
 	}
 
 	authed() {
@@ -24,11 +25,13 @@ module.exports = class MachinePacketList extends PacketList {
 	} 
 
 	connected() {
-		if(ijo.privateConfig.get("id") == undefined) {
-			ijo.panelClient.send("machine/create");
+		if(privateConfig.get("id") == undefined) {
+			this.handler.panelClient.send("machine/create");
 		}
 		else {
-			ijo.panelClient.send("machine/auth", {id: ijo.privateConfig.get("id"), secret: ijo.privateConfig.get("secret")});
+			this.handler.panelClient.send("machine/auth", {id: privateConfig.get("id"), secret: privateConfig.get("secret")});
 		}
 	}
 }
+
+module.exports = new MachinePacketList();
